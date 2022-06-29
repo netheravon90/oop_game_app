@@ -31,7 +31,7 @@ class Game {
         
     }
 
-    // Upon button press, disable button, and call for checkLetter
+    // Upon mouse click on keys or pressing keyboard letters, disable button, and call for checkLetter
     // if checkLetter = false, remove life, add 'wrong' class
     // if checkLetter = true, show matched letter on board and check for win; add 'chosen' class
     handleInteraction(key) {
@@ -47,7 +47,7 @@ class Game {
             this.removeLife();
         }
     }
-    // Upon pressing of keyboard buttons, match with the button that have the same textcontent with the input.
+    
 
     // Checks if every letter is revealed. If true, go to winning page.
     checkforWin(){
