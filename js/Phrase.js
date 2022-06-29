@@ -26,12 +26,21 @@ class Phrase {
     }
 
     // Check if letter selected matches a letter in the phrase.
-    checkLetter(){
-        
-    }
-    // Reveals the letter(s) on the board that matches the selection
-    showMatchedLetter(){
-        
-    }
-}
 
+    checkLetter(letter) {
+        return game.activePhrase.phrase.includes(letter)
+    }
+
+    // Reveals the letter(s) on the board that matches the selection
+    showMatchedLetter(letter){
+        const HiddenLetters = document.getElementsByClassName('hide');
+        for(let i = 0; i < HiddenLetters.length; i++ ){
+            if (letter === HiddenLetters[i].textContent){
+                HiddenLetters[i].classList.add('show')
+                HiddenLetters[i].classList.remove('hide')
+            }
+        }
+    };
+    
+
+}
