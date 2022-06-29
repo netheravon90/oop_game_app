@@ -11,31 +11,46 @@ header.appendChild(h3key);
 h3key.style.display = 'none'
 
 // Initiate Game
-const game = new Game();
+ let game;
 
 // Start Button for Game
-document.getElementById('btn__reset').addEventListener('click', () => game.startGame())
+document.getElementById('btn__reset').addEventListener('click', () => {
+    game = new Game();    
+    game.startGame()
 
-// Initiate interaction when button is clicked using mouse.
-
-const button = document.getElementById('qwerty')
-button.addEventListener('click', (e) => {
-    let keyClick = e.target;
-    if (keyClick.className === 'key'){
-        game.handleInteraction(keyClick);
-    } 
-})
-
-// Initiate interaction when pressing physical keyboard button.
-
-document.addEventListener('keyup', (e) => {
-    let keyPress = e.key;
+    // Initiate interaction when pressing physical keyboard button.
+    document.addEventListener('keyup', (e) => {
+        let keyPress = e.key;
+        const letters = document.getElementsByClassName('key')
+        if (/[a-zA-Z]/.test(keyPress) ) {
+            for (let i = 0; i< letters.length; i++){
+                if(keyPress === letters[i].textContent){
+                    game.handleInteraction(letters[i]);
+                 }
+            } 
+        } else {
+            h3key.style.display = '';
+            setTimeout( () => h3key.style.display = 'none', 1000)
+        }
+    })
     
-    if (/[a-zA-Z]/.test(keyPress) ) {
-        game.keyBoardInteraction(keyPress);
-    } else {
-        h3key.style.display = ''
-        setTimeout( () => h3key.style.display = 'none', 1000)
-    }
+    
+    // Initiate interaction when button is clicked using mouse.
+    const button = document.getElementById('qwerty')
+    button.addEventListener('click', (e) => {
+        let keyClick = e.target;
+        if (keyClick.className === 'key'){
+            
+            game.handleInteraction(keyClick);
+        } 
 })
+})
+
+
+
+
+
+
+
+
 

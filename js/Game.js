@@ -15,56 +15,39 @@ class Game {
     };
     // Generate random phrase index from 0 to 4
     getRandomPhrase(){
-        let randomNumber = Math.floor(Math.random() * 5);
+        let randomNumber = Math.floor(Math.random() * this.phrases.length);
         return this.phrases[randomNumber];
     };
 
     // startscreen to hide, generate random phrase and pass to HTML
     startGame(){
+        this.resetGame();
         const startScreen = document.querySelector('#overlay');
         startScreen.style.display = 'none';
         startScreen.classList.remove('lose')
         startScreen.classList.remove('win');
         this.activePhrase = this.getRandomPhrase();
         this.activePhrase.addPhraseToDisplay();
+        
     }
 
     // Upon button press, disable button, and call for checkLetter
     // if checkLetter = false, remove life, add 'wrong' class
     // if checkLetter = true, show matched letter on board and check for win; add 'chosen' class
-    handleInteraction(keyClick) {
-        keyClick.disabled = true;
-        let letter = keyClick.textContent;
+    handleInteraction(key) {
+        key.disabled = true;
+        let letter = key.textContent;
         let checkedLetter = this.activePhrase.checkLetter(letter);
         if (checkedLetter){
-            keyClick.classList.add('chosen');
+            key.classList.add('chosen');
             this.activePhrase.showMatchedLetter(letter);
             this.checkforWin();
         } else {
-            keyClick.classList.add('wrong')
+            key.classList.add('wrong')
             this.removeLife();
         }
     }
     // Upon pressing of keyboard buttons, match with the button that have the same textcontent with the input.
-    keyBoardInteraction(keyPress) {
-        const letters = document.getElementsByClassName('key')
-        for (let i = 0; i< letters.length; i++){
-            if(keyPress === letters[i].textContent){
-                // then disable the button
-                letters[i].disabled = true;
-                  // check the keyboard input if it matches any letter of the phrase.
-                let checkedLetter = this.activePhrase.checkLetter(keyPress);
-                if (checkedLetter){
-                    letters[i].classList.add('chosen');
-                    this.activePhrase.showMatchedLetter(keyPress);
-                    this.checkforWin();
-                } else {
-                    letters[i].classList.add('wrong');
-                    this.removeLife();
-                }
-            }
-        }
-    }
 
     // Checks if every letter is revealed. If true, go to winning page.
     checkforWin(){
@@ -96,12 +79,10 @@ class Game {
             gameOverMessage.textContent = 'You win! Good Job!'
             startScreen.classList.add('win');
             startScreen.style.display = ''
-            this.resetGame();
         } else {
             gameOverMessage.textContent = 'You lose! Try Again!'
             startScreen.classList.add('lose');
             startScreen.style.display = ''
-            this.resetGame();
         }
     }
 
