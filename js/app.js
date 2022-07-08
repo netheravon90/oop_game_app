@@ -25,7 +25,7 @@ document.addEventListener('keyup', (e) => {
     const letters = document.getElementsByClassName('key')
         if (/[a-zA-Z]/.test(keyPress) ) {
             for (let i = 0; i< letters.length; i++){
-                if(keyPress === letters[i].textContent){
+                if(keyPress === letters[i].textContent && letters[i].disabled === false){
                     game.handleInteraction(letters[i]);
                  }
             } 
